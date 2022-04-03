@@ -1,5 +1,6 @@
 const names = require("all-the-package-names")
                 .filter(name => name.indexOf("@") == -1)
+                .filter(name => !name.match(/[0-9]/))
                 .map(name => {
                     if(name.indexOf("/") != -1){
                         let parts = name.split("/")
@@ -10,7 +11,10 @@ const names = require("all-the-package-names")
                 .filter(name => name.length == 5 && name.indexOf("-") == -1)
 
 const uniqueNames = [...(new Set(names.map(n => n.toLowerCase())))]
-                    .map(n => (Buffer(n)).toString('base64'))
+                    .map(n => {
+                        console.log(n)
+                        return (Buffer(n)).toString('base64')
+                    })
 
 const fs = require("fs")
 
